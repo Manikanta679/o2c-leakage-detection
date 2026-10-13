@@ -23,7 +23,8 @@ The numbers in this repo = **QPR O2C logs + ECB FX rates**, modelled in **SQL**,
 | Top cash leak | Collection after terms ≈ **€96.9m** |
 | Then | Dispute / rework ≈ €4.5m; holds ≈ €1.9m |
 | Dashboard | `powerbi/O2C_Leakage.pbix` (4 pages) |
-| Decision page | `docs/08_executive_brief.md` and `docs/O2C_Leakage_Brief.pdf` |
+| Decision page | `docs/08_executive_brief.md` and `docs/O2C_Leakage_Brief.pdf` (4 pp.) |
+| Application pack | `docs/O2C_Leakage_Portfolio.pdf` + `docs/O2C_Leakage_Dashboard.pdf` |
 
 ---
 
@@ -49,7 +50,11 @@ O2C Leakage/
 | `docs/03_star_schema.md` | Facts and dimensions |
 | `docs/05_metrics.md` | DSO and cash formulas |
 | `docs/08_executive_brief.md` | Top 3 leaks, owner, cash case |
-| `docs/O2C_Leakage_Brief.pdf` | Same story, for applications |
+| `docs/O2C_Leakage_Brief.pdf` | Narrative only (4 pages) |
+| `docs/O2C_Leakage_Dashboard.pdf` | Dashboard only, scaled to **A4 landscape** (4 pages) |
+| `docs/O2C_Leakage_Portfolio.pdf` | Standard A4 brief (same as `O2C_Leakage_Brief.pdf`) for applications |
+| `sql/06_merge_portfolio_pdf.py` | Rebuild after PBI export (full-page framing) |
+| `docs/dashboard_pages/*.png` | Optional full-page screenshots (best look; see below) |
 | `sql/01_load_and_build.py` | Loads CSVs into SQLite, runs SQL, applies FX |
 | `sql/02_build_star.sql` | Star schema + leak flags |
 | `sql/03_metrics.sql` | Cash / DSO marts |
@@ -166,6 +171,27 @@ Full write-up: `docs/08_executive_brief.md`.
 - Second dataset merge (ECB on date + currency)  
 - Power BI star model and four-page ops–finance dashboard  
 - Process-intelligence vocabulary from Celonis (without claiming a Celonis extract)
+
+---
+
+## PDF dashboard framing
+
+Power BI **Export to PDF** uses a huge canvas; merged PDFs can look like a small report in the corner. Rebuild with:
+
+```powershell
+python sql/06_merge_portfolio_pdf.py D:\Downloads\O2C_Leakage.pdf
+```
+
+For **full-page** pages (like a clean screenshot), save PNGs into `docs/dashboard_pages/`:
+
+| File | Report page |
+|---|---|
+| `01_executive.png` | Executive |
+| `02_process.png` | Process |
+| `03_leakage.png` | Leakage |
+| `04_segment_region.png` | Segment & region |
+
+Then run the merge script again. Any missing PNG is filled from the Power BI PDF export.
 
 ---
 

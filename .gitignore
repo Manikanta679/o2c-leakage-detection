@@ -2,3 +2,4 @@ data/raw/*.csv
 data/raw/*.zip
 data/clean/*.db
 powerbi/model/*.csv
+docs/_dashboard_export_raw.pdf

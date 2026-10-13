@@ -16,7 +16,7 @@ LINE = HexColor("#D6DDE5")
 LIGHT = HexColor("#F4F7FA")
 
 
-def header(c, page, total=5):
+def header(c, page, total=4):
     w, h = A4
     c.setFillColor(NAVY)
     c.rect(0, h - 18 * mm, w, 18 * mm, fill=1, stroke=0)
@@ -246,26 +246,6 @@ def build():
     y = section(c, x, y, "Credit")
     y = body(c, x, y, "Author of analysis, SQL model, Power BI structure, and this brief: Manikanta Engalligi.")
     y = body(c, x, y, "Event log samples: QPR ProcessAnalyzer. FX: European Central Bank. Process-intelligence training: Celonis Academy.")
-    c.showPage()
-
-    # Page 5 — empty template note for PBI print
-    header(c, 5)
-    y = h - 32 * mm
-    y = section(c, x, y, "Attach Power BI pages here")
-    y = body(
-        c, x, y,
-        "Print or export the four pages from Power BI Desktop and keep them behind this brief, in this order: Executive, Process, Leakage, Segment & region. "
-        "Do not add extra decoration. The charts already carry the SI story: cash first, then process, then cut by segment and region.",
-    )
-    y -= 6 * mm
-    for name in ("Executive", "Process", "Leakage", "Segment & region"):
-        c.setStrokeColor(LINE)
-        c.setFillColor(LIGHT)
-        c.roundRect(x, y - 28 * mm, 174 * mm, 26 * mm, 3, fill=1, stroke=1)
-        c.setFillColor(GRAY)
-        c.setFont("Times-Italic", 10)
-        c.drawCentredString(w / 2, y - 15 * mm, f"Power BI page — {name}  (export from O2C_Leakage.pbix)")
-        y -= 32 * mm
     c.save()
     print("Wrote", OUT, "bytes", OUT.stat().st_size)
 
