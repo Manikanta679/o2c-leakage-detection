@@ -349,6 +349,12 @@ def main() -> None:
     apply_fx(con)
     con.commit()
 
+    timeline_sql = ROOT / "sql" / "04_o2c_timeline.sql"
+    if timeline_sql.exists():
+        print("Creating vw_o2c_case_timeline...")
+        con.executescript(timeline_sql.read_text(encoding="utf-8"))
+        con.commit()
+
     print("Checks")
     checks = [
         ("fact_event", "SELECT COUNT(*) FROM fact_event"),
